@@ -117,10 +117,9 @@ public class HelloWorldApp {
      * Creates and configures a new instance of the {@linkplain BoundedContext}.
      */
     private static BoundedContext createContext() {
-        String className = HelloWorldApp.class.getSimpleName();
         BoundedContextName name = BoundedContextName
                 .newBuilder()
-                .setValue(className)
+                .setValue("Hello")
                 .build();
         // Use in-memory storage for this example app.
         StorageFactory storageFactory = InMemoryStorageFactory.newInstance(name, false);

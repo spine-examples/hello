@@ -24,10 +24,12 @@
  * emitting {@link io.spine.helloworld.event.WorldGreeted WorldGreeted event}.
  */
 
+@BoundedContext("Hello")
 @CheckReturnValue
 @ParametersAreNonnullByDefault
 package io.spine.helloworld;
 
 import com.google.errorprone.annotations.CheckReturnValue;
+import io.spine.server.annotation.BoundedContext;
 
 import javax.annotation.ParametersAreNonnullByDefault;
