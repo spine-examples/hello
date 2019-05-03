@@ -25,7 +25,7 @@ import io.spine.helloworld.event.WorldGreeted;
 import io.spine.server.event.AbstractEventSubscriber;
 
 /**
- * Listens {@link WorldGreeted} event and prints the name of the user along with the greeting.
+ * Listens to {@link WorldGreeted} event and prints the name of the user along with the greeting.
  *
  * <p>Real applications use {@linkplain io.spine.server.projection.Projection
  * projections} for building UI data.
@@ -40,8 +40,6 @@ final class Speaker extends AbstractEventSubscriber {
 
     /**
      * Prints the passed text to {@link System#out}.
-     *
-     * @apiNote The main purpose of this method is to have console output
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr") // OK for this example app.
     private static void println(String text) {
