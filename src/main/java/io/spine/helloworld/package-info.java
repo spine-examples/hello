@@ -22,7 +22,7 @@
  * This package defines the Hello Context and the example application.
  */
 
-@BoundedContext("Hello") // Mark the package and its sub-packages as parts of the Hello Context.
+@BoundedContext(HelloContext.NAME) // Mark the package and its sub-packages as parts of the Hello Context.
 @CheckReturnValue
 @ParametersAreNonnullByDefault
 package io.spine.helloworld;

@@ -24,12 +24,10 @@ import io.grpc.stub.StreamObserver;
 import io.spine.client.ActorRequestFactory;
 import io.spine.client.CommandFactory;
 import io.spine.core.Ack;
-import io.spine.core.BoundedContextName;
 import io.spine.core.Command;
 import io.spine.core.UserId;
 import io.spine.helloworld.command.Print;
 import io.spine.server.BoundedContext;
-import io.spine.server.DefaultRepository;
 import io.spine.server.storage.StorageFactory;
 import io.spine.server.storage.memory.InMemoryStorageFactory;
 
@@ -74,22 +72,16 @@ public class HelloWorldApp {
     }
 
     /**
-     * Creates and configures a new instance of the {@linkplain BoundedContext}.
+     * Creates and configures a new instance of the Hello Context.
      */
     private static BoundedContext createContext() {
-        BoundedContextName name = BoundedContextName
-                .newBuilder()
-                .setValue("Hello")
-                .build();
         // Use in-memory storage for this example app.
-        StorageFactory storageFactory = InMemoryStorageFactory.newInstance(name, false);
-        BoundedContext context = BoundedContext
+        // Real application would use factories for working with JDBC or Google Datastore.
+        StorageFactory factory = InMemoryStorageFactory.newInstance(HelloContext.name(), false);
+        BoundedContext context = HelloContext
                 .newBuilder()
-                .setName(name.getValue())
-                .setStorageFactorySupplier(() -> storageFactory)
-                .add(DefaultRepository.of(Console.class))
+                .setStorageFactorySupplier(() -> factory)
                 .build();
-
         return context;
     }
 
