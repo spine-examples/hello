@@ -1,5 +1,5 @@
 //
-// Copyright 2018, TeamDev. All rights reserved.
+// Copyright 2019, TeamDev. All rights reserved.
 //
 // Redistribution and use in source and/or binary forms, with or without
 // modification, must retain the above copyright notice and the following
@@ -28,9 +28,12 @@ option java_package="io.spine.helloworld.event";
 option java_outer_classname = "EventsProto";
 option java_multiple_files = true;
 
-// An event fired when user has greeted the world.
-//
-message WorldGreeted {
-    // A name of the user which greeted the world.
+// A text was printed.
+message Printed {
+
+    // The login name of the user.
     string username = 1;
+
+    // The printed text.
+    string text = 2 [(required) = true];
 }

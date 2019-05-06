@@ -27,11 +27,9 @@ import io.spine.core.Ack;
 import io.spine.core.BoundedContextName;
 import io.spine.core.Command;
 import io.spine.core.UserId;
-import io.spine.helloworld.command.GreetWorld;
+import io.spine.helloworld.command.Print;
 import io.spine.server.BoundedContext;
 import io.spine.server.DefaultRepository;
-import io.spine.server.commandbus.CommandBus;
-import io.spine.server.event.EventBus;
 import io.spine.server.storage.StorageFactory;
 import io.spine.server.storage.memory.InMemoryStorageFactory;
 
@@ -40,77 +38,39 @@ import static io.spine.core.Acks.toCommandId;
 import static io.spine.util.Exceptions.newIllegalStateException;
 
 /**
- * A simple Hello World application which sends a command to an aggregate
- * and responds to the produced event.
+ * This application creates a command (mimicking client-side) and posts it for handling.
  */
 public class HelloWorldApp {
 
     /**
-     * The factory for creating a greeting command.
+     * The instance of the Hello Bounded Context.
+     *
+     * <p>This is a ‘server’ part of this example application.
+     */
+    private final BoundedContext context;
+
+    /**
+     * The factory for creating commands.
+     *
+     * <p>This is a ‘client’ part of this example application.
      */
     private final ActorRequestFactory requestFactory;
 
-    /**
-     * The {@code CommandBus} into which we will post the command.
-     *
-     * <p>Real applications would do this via {@link io.spine.server.CommandService}.
-     */
-    private final CommandBus commandBus;
-
     private HelloWorldApp() {
-        // Create an instance of the Bounded Context.
-        BoundedContext context = createContext();
-
-        // Obtain a reference to Command Bus to which post the greeting command.
-        // This is a ‘server’ part of the application.
-        this.commandBus = context.commandBus();
-
-        // Create a request factory to create a command.
-        // This is a ‘client’ part of the application.
+        this.context = createContext();
         this.requestFactory = createRequestFactory();
     }
 
+    /**
+     * Creates the command, posts it for execution and then closes the application.
+     */
     private void run() {
         Command command = createCommand();
-
-        // Post the command to Command Bus.
-        commandBus.post(command, new StreamObserver<Ack>() {
-            @Override
-            public void onNext(Ack ack) {
-                println("Command posted: " + shortDebugString(toCommandId(ack)));
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                throw newIllegalStateException(t, "Unable to post the command.");
-            }
-
-            @Override
-            public void onCompleted() {
-                println("Successfully posted.");
-            }
-        });
-    }
-
-    private Command createCommand() {
-        // Create a command message.
-        UserId currentUser = requestFactory.actor();
-        GreetWorld commandMessage = GreetWorld
-                .vBuilder()
-                .setUsername(currentUser.getValue())
-                .build();
-
-        // Create Command instance.
-        CommandFactory commandFactory = requestFactory.command();
-        return commandFactory.create(commandMessage);
-    }
-
-    /**
-     * Prints the passed text to console.
-     */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
-    private static void println(String text) {
-        System.out.println(text);
+        try {
+            post(command);
+        } finally {
+            close();
+        }
     }
 
     /**
@@ -127,12 +87,9 @@ public class HelloWorldApp {
                 .newBuilder()
                 .setName(name.getValue())
                 .setStorageFactorySupplier(() -> storageFactory)
-                .add(DefaultRepository.of(GreetingAggregate.class))
+                .add(DefaultRepository.of(Console.class))
                 .build();
 
-        // Register the event subscriber which prints out a greeting.
-        EventBus eventBus = context.eventBus();
-        eventBus.register(new Speaker());
         return context;
     }
 
@@ -151,6 +108,73 @@ public class HelloWorldApp {
                 .build();
     }
 
+    /**
+     * Creates the command to post.
+     */
+    private Command createCommand() {
+        // Create a command message.
+        UserId currentUser = requestFactory.actor();
+        Print commandMessage = Print
+                .vBuilder()
+                .setUsername(currentUser.getValue())
+                .setText("Hello World!")
+                .build();
+
+        // Create the Command instance using the command message.
+        CommandFactory commandFactory = requestFactory.command();
+        return commandFactory.create(commandMessage);
+    }
+
+    /**
+     * Posts the command to the {@code CommandBus} of the Hello Context.
+     *
+     * <p>Real applications would do this via {@link io.spine.server.CommandService}.
+     */
+    private void post(Command command) {
+        context.commandBus().post(command, new StreamObserver<Ack>() {
+            @Override
+            public void onNext(Ack ack) {
+                println("Command posted: " + shortDebugString(toCommandId(ack)));
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                throw newIllegalStateException(t, "Unable to post the command.");
+            }
+
+            @Override
+            public void onCompleted() {
+                println("Successfully posted.");
+            }
+        });
+    }
+
+    /**
+     * Closes the Bounded Context of the application.
+     */
+    @SuppressWarnings(
+            "CatchAndPrintStackTrace"
+            /* A real app should use more sophisticated exception handling. */
+    )
+    private void close() {
+        try {
+            context.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Prints the passed text to console.
+     */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    private static void println(String text) {
+        System.out.println(text);
+    }
+
+    /**
+     * Creates and runs the application.
+     */
     public static void main(String[] args) {
         new HelloWorldApp().run();
     }

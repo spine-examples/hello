@@ -19,7 +19,7 @@
 //
 
 plugins {
-    id 'io.spine.tools.gradle.bootstrap' version '0.15.3' apply false
+    id 'io.spine.tools.gradle.bootstrap' version '1.0.0-pre7' apply false
     id 'net.ltgt.errorprone' version '0.6' apply false
 }
 
@@ -44,9 +44,6 @@ dependencies {
     implementation deps.build.checkerAnnotations
 
     runtimeOnly "org.slf4j:slf4j-jdk14:$deps.versions.slf4j"
-
-    testImplementation group: 'io.spine', name: 'spine-testutil-server', version: spineVersion
-    testRuntimeOnly deps.test.junit5Runner
 }
 
 compileJava {

@@ -19,12 +19,10 @@
  */
 
 /**
- * This package provides a hello world example with an app sending a single 
- * {@link io.spine.helloworld.command.GreetWorld GreetWorld command} and as a result
- * emitting {@link io.spine.helloworld.event.WorldGreeted WorldGreeted event}.
+ * This package defines the Hello Context and the example application.
  */
 
-@BoundedContext("Hello")
+@BoundedContext("Hello") // Mark the package and its sub-packages as parts of the Hello Context.
 @CheckReturnValue
 @ParametersAreNonnullByDefault
 package io.spine.helloworld;
