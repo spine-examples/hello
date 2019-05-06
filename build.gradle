@@ -44,6 +44,9 @@ dependencies {
     implementation deps.build.checkerAnnotations
 
     runtimeOnly "org.slf4j:slf4j-jdk14:$deps.versions.slf4j"
+
+    testImplementation group: 'io.spine', name: 'spine-testutil-server', version: spineVersion
+    testRuntimeOnly deps.test.junit5Runner
 }
 
 compileJava {
