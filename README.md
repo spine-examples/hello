@@ -4,14 +4,11 @@
 ## Hello World!
 
 This is a simple Spine-based application which defines Hello Bounded Context, which has:
- * The command `GreetWorld` defined in the `src/proto/hellow_world/commands.proto` file.
+ * The `Print` command.
+ * The `Console`  Process Manager, which handles the command.
+ * The event `Printed` event emitted by the `Console`. 
  
- * The `GreetingAggregate`, which handles the command producing the event `WorldGreeted`. See `events.proto` for the event definition. 
- 
- * The [event subscriber](https://spine.io/core-java/javadoc/server/io/spine/server/event/AbstractEventSubscriber.html) 
-   which listens to the event and prints to the console the greeting message.
-
-To run the sample from the console, please execute:
+To run the sample from the command line, please execute:
 
 ```bash
 ./gradlew :sayHello

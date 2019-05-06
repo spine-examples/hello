@@ -24,15 +24,16 @@ package hello_world;
 import "spine/options.proto";
 
 option (type_url_prefix) = "type.spine.io";
-option java_package="io.spine.helloworld";
-option java_outer_classname = "CommandsProto";
+option java_package="io.spine.helloworld.command";
+option java_outer_classname = "ConsoleProto";
 option java_multiple_files = true;
 
-// A state of the Greeting Aggregate, which has is identified by the name of the user
-// and does not hold other data.
-message Greeting {
+// The screen state of the user's console.
+message Output {
 
-    option (entity).kind = AGGREGATE;
-
+    // The login name of the computer user.
     string username = 1;
+
+    // Text lines of the screen.
+    repeated string lines = 3;
 }

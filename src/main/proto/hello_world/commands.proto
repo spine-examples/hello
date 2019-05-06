@@ -1,5 +1,5 @@
 //
-// Copyright 2018, TeamDev. All rights reserved.
+// Copyright 2019, TeamDev. All rights reserved.
 //
 // Redistribution and use in source and/or binary forms, with or without
 // modification, must retain the above copyright notice and the following
@@ -28,9 +28,12 @@ option java_package="io.spine.helloworld.command";
 option java_outer_classname = "CommandsProto";
 option java_multiple_files = true;
 
-// A command to greet the world by a user specified by his name.
-//
-message GreetWorld {
-    // A name of the user which greets the world.
+// A command to print a text.
+message Print {
+
+    // The login name of the computer user.
     string username = 1;
+
+    // The text to print.
+    string text = 2 [(required) = true];
 }
