@@ -5,7 +5,7 @@
 
 This is a simple Spine-based application which defines Hello Bounded Context, which has:
  * The `Print` command.
- * The `Console`  Process Manager, which handles the command.
+ * The `Console` Process Manager, which handles the command.
  * The event `Printed` event emitted by the `Console`. 
  
 To run the sample from the command line, please execute:
