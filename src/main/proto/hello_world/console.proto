@@ -30,6 +30,7 @@ option java_multiple_files = true;
 
 // The screen state of the user's console.
 message Output {
+    option (entity) = { kind: PROCESS_MANAGER visibility: FULL };
 
     // The login name of the computer user.
     string username = 1;
