@@ -33,6 +33,7 @@ import io.spine.server.storage.memory.InMemoryStorageFactory;
 
 import static com.google.protobuf.TextFormat.shortDebugString;
 import static io.spine.core.Acks.toCommandId;
+import static io.spine.core.BoundedContextNames.newName;
 import static io.spine.util.Exceptions.newIllegalStateException;
 
 /**
@@ -77,7 +78,8 @@ public final class Application {
     private static BoundedContext createContext() {
         // Use in-memory storage for this example app.
         // Real application would use factories for working with JDBC or Google Datastore.
-        StorageFactory factory = InMemoryStorageFactory.newInstance(HelloContext.name(), false);
+        StorageFactory factory =
+                InMemoryStorageFactory.newInstance(newName(HelloContext.NAME), false);
         BoundedContext context = HelloContext
                 .newBuilder()
                 .setStorageFactorySupplier(() -> factory)
