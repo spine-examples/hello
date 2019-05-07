@@ -1,6 +1,7 @@
 package io.spine.helloworld;
 
 import io.spine.core.BoundedContextName;
+import io.spine.core.BoundedContextNames;
 import io.spine.server.BoundedContext;
 import io.spine.server.BoundedContextBuilder;
 import io.spine.server.DefaultRepository;
@@ -13,14 +14,11 @@ final class HelloContext {
     /**
      * The name of the Context.
      *
-     * @apiNote This constant is also used for annotating the package. See {@code
-     * package-info.java}.
+     * @apiNote This constant is also used for annotating the package.
+     * See {@code package-info.java}.
      */
     static final String NAME = "Hello";
-    private static final BoundedContextName BC_NAME = BoundedContextName
-            .newBuilder()
-            .setValue(NAME)
-            .build();
+    private static final BoundedContextName BC_NAME = BoundedContextNames.newName(NAME);
 
     /** Prevents instantiation of this utility class. */
     private HelloContext() {
@@ -31,7 +29,9 @@ final class HelloContext {
         return BC_NAME;
     }
 
-    /** Creates new instance of the Hello Context builder. */
+    /**
+     * Creates new instance of the Hello Context builder.
+     */
     static BoundedContextBuilder newBuilder() {
         return BoundedContext
                 .newBuilder()

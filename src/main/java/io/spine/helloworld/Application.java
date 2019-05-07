@@ -38,7 +38,7 @@ import static io.spine.util.Exceptions.newIllegalStateException;
 /**
  * This application creates a command (mimicking client-side) and posts it for handling.
  */
-public class HelloWorldApp {
+public final class Application {
 
     /**
      * The instance of the Hello Bounded Context.
@@ -54,7 +54,7 @@ public class HelloWorldApp {
      */
     private final ActorRequestFactory requestFactory;
 
-    private HelloWorldApp() {
+    private Application() {
         this.context = createContext();
         this.requestFactory = createRequestFactory();
     }
@@ -168,6 +168,6 @@ public class HelloWorldApp {
      * Creates and runs the application.
      */
     public static void main(String[] args) {
-        new HelloWorldApp().run();
+        new Application().run();
     }
 }

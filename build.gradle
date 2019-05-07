@@ -61,6 +61,6 @@ compileTestJava {
 
 // Task for running `HelloWorldApp` from console.
 task sayHello(type: JavaExec) {
-    main = 'io.spine.helloworld.HelloWorldApp'
+    main = 'io.spine.helloworld.Application'
     classpath = sourceSets.main.runtimeClasspath
 }
