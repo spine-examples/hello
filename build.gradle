@@ -35,7 +35,23 @@ apply from: "$rootDir/gradle/pmd.gradle"
 apply from: "$rootDir/gradle/idea.gradle"
 apply from: "$rootDir/gradle/tests.gradle"
 
+ext {
+    spineVersion = '1.0.0-SNAPSHOT'
+}
+
 forceConfiguration(project)
+configurations {
+    all {
+        resolutionStrategy {
+            //noinspection GroovyAssignabilityCheck
+            force(
+                    "io.spine:spine-server:$spineVersion",
+                    "io.spine:spine-client:$spineVersion"
+            )
+        }
+    }
+}
+
 dependencies {
     errorprone deps.build.errorProneCore
     errorproneJavac deps.build.errorProneJavac
@@ -45,7 +61,10 @@ dependencies {
 
     runtimeOnly "org.slf4j:slf4j-jdk14:$deps.versions.slf4j"
 
-    testImplementation group: 'io.spine', name: 'spine-testutil-server', version: spineVersion
+    implementation "io.spine:spine-client:$spineVersion"
+    implementation "io.spine:spine-server:$spineVersion"
+
+    testImplementation "io.spine:spine-testutil-server:$spineVersion"
     testRuntimeOnly deps.test.junit5Runner
 }
 
@@ -61,6 +80,6 @@ compileTestJava {
 
 // Task for running `HelloWorldApp` from console.
 task sayHello(type: JavaExec) {
-    main = 'io.spine.helloworld.HelloWorldApp'
+    main = 'io.spine.helloworld.Application'
     classpath = sourceSets.main.runtimeClasspath
 }
