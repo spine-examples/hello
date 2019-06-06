@@ -1,7 +1,6 @@
 package io.spine.helloworld;
 
 import io.spine.helloworld.command.Output;
-import io.spine.helloworld.command.OutputVBuilder;
 import io.spine.helloworld.command.Print;
 import io.spine.helloworld.event.Printed;
 import io.spine.server.command.Assign;
@@ -10,7 +9,7 @@ import io.spine.server.procman.ProcessManager;
 /**
  * This Process Manager handles the {@linkplain Print printing} commands.
  */
-final class Console extends ProcessManager<String, Output, OutputVBuilder> {
+final class Console extends ProcessManager<String, Output, Output.Builder> {
 
     /**
      * Handles the printing command.
@@ -30,10 +29,10 @@ final class Console extends ProcessManager<String, Output, OutputVBuilder> {
                  .addLines(text);
         println(text);
         return Printed
-                .vBuilder()
+                .newBuilder()
                 .setUsername(username)
                 .setText(command.getText())
-                .build();
+                .vBuild();
     }
 
     /**
