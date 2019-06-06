@@ -32,10 +32,10 @@ class HelloContextTest {
         @BeforeEach
         void sendCommand() {
             command = Print
-                    .vBuilder()
+                    .newBuilder()
                     .setUsername(randomString())
                     .setText(randomString())
-                    .build();
+                    .vBuild();
             context.receivesCommand(command);
         }
 
@@ -50,7 +50,7 @@ class HelloContextTest {
                     .newBuilder()
                     .setUsername(command.getUsername())
                     .addLines(command.getText())
-                    .build();
+                    .vBuild();
 
             assertEntity.hasStateThat()
                         .comparingExpectedFieldsOnly()

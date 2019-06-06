@@ -92,9 +92,9 @@ public final class Application {
     private static ActorRequestFactory createRequestFactory() {
         @SuppressWarnings("AccessOfSystemProperties")
         UserId currentUser = UserId
-                .vBuilder()
+                .newBuilder()
                 .setValue(System.getProperty("user.name"))
-                .build();
+                .vBuild();
         return ActorRequestFactory
                 .newBuilder()
                 .setActor(currentUser)
@@ -108,10 +108,10 @@ public final class Application {
         // Create a command message.
         UserId currentUser = requestFactory.actor();
         Print commandMessage = Print
-                .vBuilder()
+                .newBuilder()
                 .setUsername(currentUser.getValue())
                 .setText("Hello World!")
-                .build();
+                .vBuild();
 
         // Create the Command instance using the command message.
         CommandFactory commandFactory = requestFactory.command();
