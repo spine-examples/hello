@@ -31,7 +31,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 apply plugin: 'net.ltgt.errorprone'
-apply from: "$rootDir/gradle/pmd.gradle"
+apply from: "$rootDir/gradle/static-analysis.gradle"
 apply from: "$rootDir/gradle/idea.gradle"
 apply from: "$rootDir/gradle/tests.gradle"
 
