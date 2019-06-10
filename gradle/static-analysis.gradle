@@ -18,17 +18,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+apply plugin: 'pmd'
 
 /*
- * This script configures Gradle PMD plugin.
+ * Configure Gradle PMD plugin.
  *
- * Currently a warning on "use incremental analysis" is always emitted. But there is no way
- * to enable it due to a Gradle issue.
+ * Currently a warning on "use incremental analysis" is always emitted. 
+ * But there is no way to enable it due to a Gradle issue.
  *
  * See https://github.com/gradle/gradle/issues/8277.
  */
-apply plugin: 'pmd'
-
 pmd {
     toolVersion = "${deps.versions.pmd}"
     consoleOutput= true
@@ -57,7 +56,7 @@ tasks.withType(JavaCompile) {
     //
     // For more config details see:
     //    https://github.com/tbroyer/gradle-errorprone-plugin/tree/master#usage
-
+    //
     options.errorprone.errorproneArgs.addAll(
             // 1. Exclude generated sources from being analyzed by Error Prone.
             '-XepExcludedPaths:.*/generated/.*',
