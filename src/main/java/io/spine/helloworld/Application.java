@@ -28,8 +28,6 @@ import io.spine.core.Command;
 import io.spine.core.UserId;
 import io.spine.helloworld.command.Print;
 import io.spine.server.BoundedContext;
-import io.spine.server.storage.StorageFactory;
-import io.spine.server.storage.memory.InMemoryStorageFactory;
 
 import static com.google.protobuf.TextFormat.shortDebugString;
 import static io.spine.core.Acks.toCommandId;
@@ -72,18 +70,12 @@ public final class Application {
     }
 
     /**
-     * Creates and configures a new instance of the Hello Context.
+     * Creates a new instance of the Hello Context.
      */
     private static BoundedContext createContext() {
-        // Use in-memory storage for this example app.
-        // Real application would use factories for working with JDBC or Google Datastore.
-        StorageFactory factory =
-                InMemoryStorageFactory.newInstance(HelloContext.NAME, false);
-        BoundedContext context = HelloContext
+        return HelloContext
                 .newBuilder()
-                .setStorageFactorySupplier(() -> factory)
                 .build();
-        return context;
     }
 
     /**

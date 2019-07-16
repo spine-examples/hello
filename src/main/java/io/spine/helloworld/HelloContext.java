@@ -26,8 +26,7 @@ final class HelloContext {
      */
     static BoundedContextBuilder newBuilder() {
         return BoundedContext
-                .newBuilder()
-                .setName(NAME)
+                .singleTenant(NAME)
                 .add(DefaultRepository.of(Console.class));
     }
 }
