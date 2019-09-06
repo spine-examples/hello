@@ -28,6 +28,8 @@ import io.spine.core.Command;
 import io.spine.core.UserId;
 import io.spine.helloworld.command.Print;
 import io.spine.server.BoundedContext;
+import io.spine.server.ServerEnvironment;
+import io.spine.server.transport.memory.InMemoryTransportFactory;
 
 import static com.google.protobuf.TextFormat.shortDebugString;
 import static io.spine.core.Acks.toCommandId;
@@ -53,8 +55,18 @@ public final class Application {
     private final ActorRequestFactory requestFactory;
 
     private Application() {
+        configureServerEnvironment();
         this.context = createContext();
         this.requestFactory = createRequestFactory();
+    }
+
+    /**
+     * Configures conditions and configuration under which the application operates.
+     */
+    private static void configureServerEnvironment() {
+        ServerEnvironment serverEnvironment = ServerEnvironment.instance();
+        serverEnvironment.configureStorage(new SimpleStorageFactory());
+        serverEnvironment.configureTransport(InMemoryTransportFactory.newInstance());
     }
 
     /**
