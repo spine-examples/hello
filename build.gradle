@@ -31,10 +31,6 @@ spine {
     forceDependencies = true
 }
 
-ext {
-    spineVersion = '1.0.3'
-}
-
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -50,7 +46,7 @@ dependencies {
     implementation "com.google.guava:guava:28.1-jre"
     implementation "org.checkerframework:checker-qual:2.11.0"
 
-    testImplementation "io.spine:spine-testutil-server:$spineVersion"
+    testImplementation "io.spine:spine-testutil-server:${spine.version()}"
 }
 
 tasks.withType(JavaCompile) {
