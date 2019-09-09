@@ -19,7 +19,7 @@
  */
 
 ext {
-    junitVersion = '5.5.1'
+    junitVersion = '5.5.2'
 }
 
 dependencies {
