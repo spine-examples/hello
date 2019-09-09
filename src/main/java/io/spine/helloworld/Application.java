@@ -21,6 +21,7 @@
 package io.spine.helloworld;
 
 import io.grpc.stub.StreamObserver;
+import io.spine.base.Environment;
 import io.spine.client.ActorRequestFactory;
 import io.spine.client.CommandFactory;
 import io.spine.core.Ack;
@@ -53,8 +54,24 @@ public final class Application {
     private final ActorRequestFactory requestFactory;
 
     private Application() {
+        setEnvironmentToTests();
         this.context = createContext();
         this.requestFactory = createRequestFactory();
+    }
+
+    /**
+     * Enables the "test mode" for automatic configuration of the Spine routines.
+     *
+     * <p>Such environment is not suitable for use in production but is sufficient for a simple
+     * "Hello World" example.
+     *
+     * <p>For the production scenarios, check out the
+     * <a href="https://github.com/SpineEventEngine/gcloud-java/">Spine library for
+     * Google Cloud Datastore</a>.
+     */
+    private static void setEnvironmentToTests() {
+        Environment.instance()
+                   .setToTests();
     }
 
     /**

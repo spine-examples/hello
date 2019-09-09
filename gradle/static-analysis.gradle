@@ -29,7 +29,7 @@ apply plugin: 'pmd'
  * See https://github.com/gradle/gradle/issues/8277.
  */
 pmd {
-    toolVersion = "${deps.versions.pmd}"
+    toolVersion = '6.16.0'
     consoleOutput= true
 
     // The build is going to fail in case of violations.

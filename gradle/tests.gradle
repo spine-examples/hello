@@ -18,9 +18,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+ext {
+    junitVersion = '5.5.2'
+}
+
 dependencies {
-    testImplementation deps.test.junit5Api
-    testRuntimeOnly deps.test.junit5Runner
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
 test {
