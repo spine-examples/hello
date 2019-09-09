@@ -47,7 +47,7 @@ dependencies {
     implementation "org.checkerframework:checker-qual:2.10.0"
 
     testImplementation "io.spine:spine-testutil-server:$spineVersion"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.1"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.2"
 }
 
 tasks.withType(JavaCompile) {
