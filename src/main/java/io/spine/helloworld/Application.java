@@ -21,7 +21,6 @@
 package io.spine.helloworld;
 
 import io.grpc.stub.StreamObserver;
-import io.spine.base.Environment;
 import io.spine.client.ActorRequestFactory;
 import io.spine.client.CommandFactory;
 import io.spine.core.Ack;
@@ -29,6 +28,9 @@ import io.spine.core.Command;
 import io.spine.core.UserId;
 import io.spine.helloworld.command.Print;
 import io.spine.server.BoundedContext;
+import io.spine.server.ServerEnvironment;
+import io.spine.server.storage.memory.InMemoryStorageFactory;
+import io.spine.server.transport.memory.InMemoryTransportFactory;
 
 import static com.google.protobuf.TextFormat.shortDebugString;
 import static io.spine.core.Acks.toCommandId;
@@ -54,24 +56,18 @@ public final class Application {
     private final ActorRequestFactory requestFactory;
 
     private Application() {
-        setEnvironmentToTests();
+        configureServerEnvironment();
         this.context = createContext();
         this.requestFactory = createRequestFactory();
     }
 
     /**
-     * Enables the "test mode" for automatic configuration of the Spine routines.
-     *
-     * <p>Such environment is not suitable for use in production but is sufficient for a simple
-     * "Hello World" example.
-     *
-     * <p>For the production scenarios, check out the
-     * <a href="https://github.com/SpineEventEngine/gcloud-java/">Spine library for
-     * Google Cloud Datastore</a>.
+     * Configures conditions and configuration under which the application operates.
      */
-    private static void setEnvironmentToTests() {
-        Environment.instance()
-                   .setToTests();
+    private static void configureServerEnvironment() {
+        ServerEnvironment serverEnvironment = ServerEnvironment.instance();
+        serverEnvironment.configureStorage(InMemoryStorageFactory.newInstance());
+        serverEnvironment.configureTransport(InMemoryTransportFactory.newInstance());
     }
 
     /**
@@ -155,7 +151,7 @@ public final class Application {
      * Closes the Bounded Context of the application.
      */
     @SuppressWarnings(
-            "CatchAndPrintStackTrace"
+            {"CatchAndPrintStackTrace", "CallToPrintStackTrace"}
             /* A real app should use more sophisticated exception handling. */
     )
     private void close() {
