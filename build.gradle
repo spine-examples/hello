@@ -44,7 +44,7 @@ dependencies {
     errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 
     implementation "com.google.guava:guava:28.1-jre"
-    implementation "org.checkerframework:checker-qual:2.11.0"
+    implementation "org.checkerframework:checker-qual:2.11.1"
 
     testImplementation "io.spine:spine-testutil-server:${spine.version()}"
 }
