@@ -36,5 +36,5 @@ message Output {
     string username = 1;
 
     // Text lines of the screen.
-    repeated string lines = 3;
+    repeated string lines = 2;
 }
