@@ -43,8 +43,8 @@ dependencies {
     errorprone "com.google.errorprone:error_prone_core:2.3.4"
     errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 
-    implementation "com.google.guava:guava:28.1-jre"
-    implementation "org.checkerframework:checker-qual:3.0.1"
+    implementation "com.google.guava:guava:28.2-jre"
+    implementation "org.checkerframework:checker-qual:3.2.0"
 
     testImplementation "io.spine:spine-testutil-server:${spine.version()}"
 }
