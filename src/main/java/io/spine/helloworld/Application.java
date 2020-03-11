@@ -126,7 +126,7 @@ public final class Application {
     /**
      * Posts the command to the {@code CommandBus} of the Hello Context.
      *
-     * <p>Real applications would do this via {@link io.spine.server.CommandService}.
+     * <p>Real applications would do this via {@link io.spine.client.Client Client}.
      */
     private void post(Command command) {
         context.commandBus().post(command, new StreamObserver<Ack>() {
