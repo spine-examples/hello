@@ -36,7 +36,7 @@ import static java.lang.String.format;
  *    <li>posts the command to the server.
  * </ol>
  *
- * <p>When the command is posted and handled, the application terminates.
+ * <p>After the command is posted and handled, the application terminates.
  */
 public final class Example {
 
