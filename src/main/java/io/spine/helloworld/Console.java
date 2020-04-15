@@ -6,6 +6,8 @@ import io.spine.helloworld.event.Printed;
 import io.spine.server.command.Assign;
 import io.spine.server.procman.ProcessManager;
 
+import static java.lang.String.format;
+
 /**
  * This Process Manager handles the {@linkplain Print printing} commands.
  */
@@ -40,7 +42,7 @@ final class Console extends ProcessManager<String, Output, Output.Builder> {
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     private void println(String userName, String text) {
-        String output = String.format("[%s] %s", userName, text);
+        String output = format("[%s] %s", userName, text);
         System.out.println(output);
     }
 }
