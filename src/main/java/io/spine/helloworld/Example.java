@@ -49,9 +49,34 @@ public final class Example {
     /** The client-side of this example.*/
     private @Nullable Client client;
 
+    /**
+     * Runs the example.
+     */
+    public static void main(String[] args) {
+        Example app = new Example();
+        app.run();
+    }
+
     /** Generates a new server name. */
     private Example() {
         this.serverName = UUID.randomUUID().toString();
+    }
+
+    /**
+     * Executes the steps of the example.
+     */
+    private void run() {
+        configureServerEnvironment();
+        try {
+            createAndStartServer();
+            createClient();
+            sendCommand();
+        } catch (Exception e) {
+            onError(e);
+        }
+        finally {
+            close();
+        }
     }
 
     /**
@@ -120,23 +145,6 @@ public final class Example {
         return checkNotNull(client);
     }
 
-    /**
-     * Executes the steps of the example.
-     */
-    private void run() {
-        configureServerEnvironment();
-        try {
-            createAndStartServer();
-            createClient();
-            sendCommand();
-        } catch (Exception e) {
-            onError(e);
-        }
-        finally {
-            close();
-        }
-    }
-
     @SuppressWarnings("CheckReturnValue")
         // Ignore subscriptions returned by the `post()` method for the brevity of the example.
     private void sendCommand() {
@@ -166,13 +174,5 @@ public final class Example {
         server().shutdown();
         this.server = null;
         this.serverName = null;
-    }
-
-    /**
-     * Runs the example.
-     */
-    public static void main(String[] args) {
-        Example app = new Example();
-        app.run();
     }
 }
