@@ -2,7 +2,6 @@ package io.spine.helloworld;
 
 import io.spine.server.BoundedContext;
 import io.spine.server.BoundedContextBuilder;
-import io.spine.server.DefaultRepository;
 
 /**
  * Provides {@link BoundedContextBuilder} for the Hello Context.
@@ -27,6 +26,6 @@ final class HelloContext {
     static BoundedContextBuilder newBuilder() {
         return BoundedContext
                 .singleTenant(NAME)
-                .add(DefaultRepository.of(Console.class));
+                .add(Console.class);
     }
 }

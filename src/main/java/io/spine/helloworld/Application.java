@@ -20,21 +20,16 @@
 
 package io.spine.helloworld;
 
-import io.grpc.stub.StreamObserver;
 import io.spine.client.ActorRequestFactory;
 import io.spine.client.CommandFactory;
-import io.spine.core.Ack;
 import io.spine.core.Command;
 import io.spine.core.UserId;
+import io.spine.grpc.StreamObservers;
 import io.spine.helloworld.command.Print;
 import io.spine.server.BoundedContext;
 import io.spine.server.ServerEnvironment;
 import io.spine.server.storage.memory.InMemoryStorageFactory;
 import io.spine.server.transport.memory.InMemoryTransportFactory;
-
-import static com.google.protobuf.TextFormat.shortDebugString;
-import static io.spine.core.Acks.toCommandId;
-import static io.spine.util.Exceptions.newIllegalStateException;
 
 /**
  * This application creates a command (mimicking client-side) and posts it for handling.
@@ -57,7 +52,9 @@ public final class Application {
 
     private Application() {
         configureServerEnvironment();
-        this.context = createContext();
+        this.context = HelloContext
+                .newBuilder()
+                .build();
         this.requestFactory = createRequestFactory();
     }
 
@@ -65,9 +62,24 @@ public final class Application {
      * Configures conditions and configuration under which the application operates.
      */
     private static void configureServerEnvironment() {
-        ServerEnvironment serverEnvironment = ServerEnvironment.instance();
-        serverEnvironment.configureStorage(InMemoryStorageFactory.newInstance());
-        serverEnvironment.configureTransport(InMemoryTransportFactory.newInstance());
+        ServerEnvironment se = ServerEnvironment.instance();
+        se.configureStorage(InMemoryStorageFactory.newInstance());
+        se.configureTransport(InMemoryTransportFactory.newInstance());
+    }
+
+    /**
+     * Creates a new request factory with the ID of the current computer user.
+     */
+    private static ActorRequestFactory createRequestFactory() {
+        @SuppressWarnings("AccessOfSystemProperties")
+        UserId currentUser = UserId
+                .newBuilder()
+                .setValue(System.getProperty("user.name"))
+                .vBuild();
+        return ActorRequestFactory
+                .newBuilder()
+                .setActor(currentUser)
+                .build();
     }
 
     /**
@@ -80,30 +92,6 @@ public final class Application {
         } finally {
             close();
         }
-    }
-
-    /**
-     * Creates a new instance of the Hello Context.
-     */
-    private static BoundedContext createContext() {
-        return HelloContext
-                .newBuilder()
-                .build();
-    }
-
-    /**
-     * Creates a new request factory with the ID of the current user and the system time zone.
-     */
-    private static ActorRequestFactory createRequestFactory() {
-        @SuppressWarnings("AccessOfSystemProperties")
-        UserId currentUser = UserId
-                .newBuilder()
-                .setValue(System.getProperty("user.name"))
-                .vBuild();
-        return ActorRequestFactory
-                .newBuilder()
-                .setActor(currentUser)
-                .build();
     }
 
     /**
@@ -125,26 +113,9 @@ public final class Application {
 
     /**
      * Posts the command to the {@code CommandBus} of the Hello Context.
-     *
-     * <p>Real applications would do this via {@link io.spine.client.Client Client}.
      */
     private void post(Command command) {
-        context.commandBus().post(command, new StreamObserver<Ack>() {
-            @Override
-            public void onNext(Ack ack) {
-                println("Command posted: " + shortDebugString(toCommandId(ack)));
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                throw newIllegalStateException(t, "Unable to post the command.");
-            }
-
-            @Override
-            public void onCompleted() {
-                println("Successfully posted.");
-            }
-        });
+        context.commandBus().post(command, StreamObservers.noOpObserver());
     }
 
     /**
@@ -163,17 +134,10 @@ public final class Application {
     }
 
     /**
-     * Prints the passed text to console.
-     */
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
-    private static void println(String text) {
-        System.out.println(text);
-    }
-
-    /**
      * Creates and runs the application.
      */
     public static void main(String[] args) {
-        new Application().run();
+        Application app = new Application();
+        app.run();
     }
 }

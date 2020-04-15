@@ -27,7 +27,7 @@ final class Console extends ProcessManager<String, Output, Output.Builder> {
         String text = command.getText();
         builder().setUsername(username)
                  .addLines(text);
-        println(text);
+        println(username, text);
         return Printed
                 .newBuilder()
                 .setUsername(username)
@@ -39,7 +39,8 @@ final class Console extends ProcessManager<String, Output, Output.Builder> {
      * Prints the passed text to console.
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
-    private static void println(String text) {
-        System.out.println(text);
+    private void println(String userName, String text) {
+        String output = String.format("[%s] %s", userName, text);
+        System.out.println(output);
     }
 }
