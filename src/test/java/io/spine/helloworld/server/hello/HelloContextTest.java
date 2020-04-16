@@ -1,8 +1,7 @@
-package io.spine.helloworld;
+package io.spine.helloworld.server.hello;
 
-import io.spine.helloworld.command.Output;
-import io.spine.helloworld.command.Print;
-import io.spine.helloworld.event.Printed;
+import io.spine.helloworld.hello.command.Print;
+import io.spine.helloworld.hello.event.Printed;
 import io.spine.testing.server.EventSubject;
 import io.spine.testing.server.blackbox.BlackBoxBoundedContext;
 import io.spine.testing.server.entity.EntitySubject;

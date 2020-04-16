@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, TeamDev. All rights reserved.
+ * Copyright 2020, TeamDev. All rights reserved.
  *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
@@ -19,15 +19,14 @@
  */
 
 /**
- * This package defines the Hello Context and the example application.
+ * This package contains server-side part of the Hello World example.
+ *
+ * @see io.spine.helloworld.server.Server Server
  */
-
-@BoundedContext(HelloContext.NAME) // Mark the package and its sub-packages as parts of the Hello Context.
 @CheckReturnValue
 @ParametersAreNonnullByDefault
-package io.spine.helloworld;
+package io.spine.helloworld.server;
 
 import com.google.errorprone.annotations.CheckReturnValue;
-import io.spine.core.BoundedContext;
 
 import javax.annotation.ParametersAreNonnullByDefault;

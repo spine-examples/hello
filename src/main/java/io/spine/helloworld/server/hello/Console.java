@@ -1,8 +1,7 @@
-package io.spine.helloworld;
+package io.spine.helloworld.server.hello;
 
-import io.spine.helloworld.command.Output;
-import io.spine.helloworld.command.Print;
-import io.spine.helloworld.event.Printed;
+import io.spine.helloworld.hello.command.Print;
+import io.spine.helloworld.hello.event.Printed;
 import io.spine.server.command.Assign;
 import io.spine.server.procman.ProcessManager;
 
