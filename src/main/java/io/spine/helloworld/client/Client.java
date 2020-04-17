@@ -24,6 +24,7 @@ public final class Client {
 
     /** Subscriptions to the events produced in response to the {@link Print} command. */
     private @Nullable ImmutableSet<Subscription> printingSubscriptions;
+    private boolean done;
 
     public Client(String serverName) {
         checkNotNull(serverName);
@@ -56,11 +57,16 @@ public final class Client {
      *  we clear the subscriptions as the event arrives.
      */
     private void onPrinted(Printed event) {
+        printEvent(event);
+        done = true;
         if (printingSubscriptions != null) {
-            printEvent(event);
             printingSubscriptions.forEach(client::cancel);
             printingSubscriptions = null;
         }
+    }
+
+    public boolean isDone() {
+        return done;
     }
 
     private void printEvent(EventMessage e) {
@@ -72,7 +78,7 @@ public final class Client {
     }
 
     /**
-     * Shuts down the client.
+     * Shuts the client down.
      */
     public void shutdown() {
         client.shutdown();

@@ -5,7 +5,10 @@ import io.spine.helloworld.hello.command.Print;
 import io.spine.helloworld.hello.event.Printed;
 import io.spine.helloworld.server.Server;
 
+import java.time.Duration;
 import java.util.UUID;
+
+import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
 
 /**
  * This example application demonstrates sending a command to a server, observing the results
@@ -54,6 +57,10 @@ public final class Example {
             server.start();
             client = new Client(serverName);
             client.sendCommand();
+            while (!client.isDone()) {
+                //noinspection UnstableApiUsage
+                sleepUninterruptibly(Duration.ofMillis(100));
+            }
         } catch (Exception e) {
             onError(e);
         }
