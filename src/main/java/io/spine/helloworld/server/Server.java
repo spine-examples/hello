@@ -13,7 +13,6 @@ import io.spine.server.transport.memory.InMemoryTransportFactory;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static io.spine.server.Server.inProcess;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
