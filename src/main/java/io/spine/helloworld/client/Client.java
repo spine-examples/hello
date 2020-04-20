@@ -1,11 +1,8 @@
 package io.spine.helloworld.client;
 
-import com.google.common.collect.ImmutableSet;
 import io.spine.base.EventMessage;
-import io.spine.client.Subscription;
 import io.spine.helloworld.hello.command.Print;
 import io.spine.helloworld.hello.event.Printed;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,10 +18,6 @@ import static java.lang.String.format;
 public final class Client {
 
     private final io.spine.client.Client client;
-
-    /** Subscriptions to the events produced in response to the {@link Print} command. */
-    private @Nullable ImmutableSet<Subscription> printingSubscriptions;
-    private boolean done;
 
     public Client(String serverName) {
         checkNotNull(serverName);
@@ -43,11 +36,11 @@ public final class Client {
                 .setUsername(userName)
                 .setText("Hello World!")
                 .vBuild();
-        this.printingSubscriptions =
-                client.asGuest()
-                      .command(commandMessage)
-                      .observe(Printed.class, this::onPrinted)
-                      .post();
+
+        client.asGuest()
+              .command(commandMessage)
+              .observe(Printed.class, this::onPrinted)
+              .post();
     }
 
     /**
@@ -58,15 +51,13 @@ public final class Client {
      */
     private void onPrinted(Printed event) {
         printEvent(event);
-        done = true;
-        if (printingSubscriptions != null) {
-            printingSubscriptions.forEach(client::cancel);
-            printingSubscriptions = null;
-        }
+        client.subscriptions()
+              .cancelAll();
     }
 
     public boolean isDone() {
-        return done;
+        return client.subscriptions()
+                     .isEmpty();
     }
 
     private void printEvent(EventMessage e) {
@@ -78,9 +69,9 @@ public final class Client {
     }
 
     /**
-     * Shuts the client down.
+     * Closes the client, performing all necessary cleanups.
      */
-    public void shutdown() {
-        client.shutdown();
+    public void close() {
+        client.close();
     }
 }

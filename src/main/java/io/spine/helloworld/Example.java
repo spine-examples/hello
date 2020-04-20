@@ -66,7 +66,7 @@ public final class Example {
         }
         finally {
             if (client != null) {
-                client.shutdown();
+                client.close();
             }
             server.shutdown();
         }

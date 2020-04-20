@@ -2,9 +2,7 @@ package io.spine.helloworld.server.hello;
 
 import io.spine.helloworld.hello.command.Print;
 import io.spine.helloworld.hello.event.Printed;
-import io.spine.testing.server.EventSubject;
-import io.spine.testing.server.blackbox.BlackBoxBoundedContext;
-import io.spine.testing.server.entity.EntitySubject;
+import io.spine.testing.server.blackbox.BlackBoxContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,11 +13,11 @@ import static io.spine.testing.TestValues.randomString;
 @DisplayName("Hello Context should")
 class HelloContextTest {
 
-    private BlackBoxBoundedContext<?> context;
+    private BlackBoxContext context;
 
     @BeforeEach
     void setUp() {
-        context = BlackBoxBoundedContext.from(HelloContext.newBuilder());
+        context = BlackBoxContext.from(HelloContext.newBuilder());
     }
 
     @Nested
@@ -41,37 +39,23 @@ class HelloContextTest {
         @Test
         @DisplayName("updating the `Console` entity")
         void entity() {
-            EntitySubject assertEntity = context.assertEntity(Console.class, command.getUsername());
-
-            assertEntity.exists();
-
-            Output expectedState = Output
+            Output expected = Output
                     .newBuilder()
                     .setUsername(command.getUsername())
                     .addLines(command.getText())
                     .vBuild();
-
-            assertEntity.hasStateThat()
-                        .comparingExpectedFieldsOnly()
-                        .isEqualTo(expectedState);
+            context.assertState(command.getUsername(), expected);
         }
 
         @Test
         @DisplayName("emitting the `Printed` event")
         void event() {
-            EventSubject assertEvents = context.assertEvents().withType(Printed.class);
-
-            assertEvents.hasSize(1);
-
-            Printed expectedEvent = Printed
+            Printed expected = Printed
                     .newBuilder()
                     .setUsername(command.getUsername())
                     .setText(command.getText())
                     .build();
-
-            assertEvents.message(0)
-                        .comparingExpectedFieldsOnly()
-                        .isEqualTo(expectedEvent);
+            context.assertEvent(expected);
         }
     }
 }
