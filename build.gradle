@@ -19,7 +19,7 @@
 //
 
 plugins {
-    id 'io.spine.tools.gradle.bootstrap' version '1.5.0' apply false
+    id 'io.spine.tools.gradle.bootstrap' version '1.5.8' apply false
     id 'net.ltgt.errorprone' version '1.1.1' apply false
 }
 
@@ -43,8 +43,10 @@ dependencies {
     errorprone "com.google.errorprone:error_prone_core:2.3.4"
     errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 
-    implementation "com.google.guava:guava:28.2-jre"
-    implementation "org.checkerframework:checker-qual:3.2.0"
+    implementation(
+            "org.checkerframework:checker-qual:3.3.0",
+            "com.google.guava:guava:29.0-jre"
+    )
 
     testImplementation "io.spine:spine-testutil-server:${spine.version()}"
 }
@@ -76,6 +78,6 @@ tasks.withType(JavaCompile) {
 
 // Task for running `HelloWorldApp` from console.
 task sayHello(type: JavaExec) {
-    main = 'io.spine.helloworld.Application'
+    main = 'io.spine.helloworld.Example'
     classpath = sourceSets.main.runtimeClasspath
 }

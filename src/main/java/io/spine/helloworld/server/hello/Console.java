@@ -1,10 +1,11 @@
-package io.spine.helloworld;
+package io.spine.helloworld.server.hello;
 
-import io.spine.helloworld.command.Output;
-import io.spine.helloworld.command.Print;
-import io.spine.helloworld.event.Printed;
+import io.spine.helloworld.hello.command.Print;
+import io.spine.helloworld.hello.event.Printed;
 import io.spine.server.command.Assign;
 import io.spine.server.procman.ProcessManager;
+
+import static java.lang.String.format;
 
 /**
  * This Process Manager handles the {@linkplain Print printing} commands.
@@ -27,7 +28,7 @@ final class Console extends ProcessManager<String, Output, Output.Builder> {
         String text = command.getText();
         builder().setUsername(username)
                  .addLines(text);
-        println(text);
+        println(username, text);
         return Printed
                 .newBuilder()
                 .setUsername(username)
@@ -39,7 +40,8 @@ final class Console extends ProcessManager<String, Output, Output.Builder> {
      * Prints the passed text to console.
      */
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
-    private static void println(String text) {
-        System.out.println(text);
+    private void println(String userName, String text) {
+        String output = format("[%s] %s", userName, text);
+        System.out.println(output);
     }
 }

@@ -19,22 +19,21 @@
 //
 syntax = "proto3";
 
-package hello_world;
+package hello;
 
 import "spine/options.proto";
 
 option (type_url_prefix) = "type.spine.io";
-option java_package="io.spine.helloworld.command";
-option java_outer_classname = "ConsoleProto";
+option java_package="io.spine.helloworld.hello.event";
+option java_outer_classname = "EventsProto";
 option java_multiple_files = true;
 
-// The screen state of the user's console.
-message Output {
-    option (entity) = { kind: PROCESS_MANAGER visibility: FULL };
+// A text was printed.
+message Printed {
 
-    // The login name of the computer user.
+    // The login name of the user.
     string username = 1;
 
-    // Text lines of the screen.
-    repeated string lines = 2;
+    // The printed text.
+    string text = 2 [(required) = true];
 }
