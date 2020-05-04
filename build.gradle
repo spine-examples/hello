@@ -44,7 +44,7 @@ dependencies {
     errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 
     implementation(
-            "org.checkerframework:checker-qual:3.3.0",
+            "org.checkerframework:checker-qual:3.4.0",
             "com.google.guava:guava:29.0-jre"
     )
 
