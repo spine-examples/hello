@@ -52,31 +52,30 @@ dependencies {
 }
 
 tasks.withType(JavaCompile) {
-
-    // Explicitly states the encoding of the source and test source files, ensuring
+    // Set the encoding of the source and test source files, ensuring
     // correct execution of the `javac` task.
     options.encoding = 'UTF-8'
+    // Turn important warnings on.
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 
-    // Configure Error Prone:
-    // 1. Exclude generated sources from being analyzed by Error Prone.
-    // 2. Turn the check off until Error Prone can handle `@Nested` JUnit classes.
-    //    See issue: https://github.com/google/error-prone/issues/956
-    // 3. Turn off checks which report unused methods and unused method parameters.
-    //    See issue: https://github.com/SpineEventEngine/config/issues/61
-    //
-    // For more config details see:
-    //    https://github.com/tbroyer/gradle-errorprone-plugin/tree/master#usage
-
+    // Configure Error Prone
     options.errorprone.errorproneArgs.addAll(
+            // 1. Exclude generated sources from being analyzed by Error Prone.
             '-XepExcludedPaths:.*/generated/.*',
+            // 2. Turn the check off until Error Prone can handle `@Nested` JUnit classes.
+            //    See issue: https://github.com/google/error-prone/issues/956
             '-Xep:ClassCanBeStatic:OFF',
+            // 3. Turn off checks which report unused methods and unused method parameters.
+            //    See issue: https://github.com/SpineEventEngine/config/issues/61
             '-Xep:UnusedMethod:OFF',
             '-Xep:UnusedVariable:OFF',
-            '-Xep:CheckReturnValue:OFF')
+            '-Xep:CheckReturnValue:OFF'
+            // For more config details please see:
+            //    https://github.com/tbroyer/gradle-errorprone-plugin/tree/master#usage
+    )
 }
 
-// Task for running `HelloWorldApp` from console.
+// The task for running example application from the command line.
 task sayHello(type: JavaExec) {
     main = 'io.spine.helloworld.Example'
     classpath = sourceSets.main.runtimeClasspath
