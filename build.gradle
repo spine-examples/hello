@@ -1,5 +1,5 @@
 //
-// Copyright 2018, TeamDev. All rights reserved.
+// Copyright 2020, TeamDev. All rights reserved.
 //
 // Redistribution and use in source and/or binary forms, with or without
 // modification, must retain the above copyright notice and the following
@@ -19,64 +19,32 @@
 //
 
 plugins {
-    id 'io.spine.tools.gradle.bootstrap' version '1.5.8' apply false
-    id 'net.ltgt.errorprone' version '1.1.1' apply false
+    id 'io.spine.tools.gradle.bootstrap' version '1.5.8'
 }
-
-apply plugin: 'io.spine.tools.gradle.bootstrap'
 
 spine.enableJava().server()
-
-spine {
-    forceDependencies = true
-}
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-apply plugin: 'net.ltgt.errorprone'
-apply from: "$rootDir/gradle/static-analysis.gradle"
+// Configure IDEA to see the generated code.
 apply from: "$rootDir/gradle/idea.gradle"
+
+// Add JUnit to the project.
 apply from: "$rootDir/gradle/tests.gradle"
 
 dependencies {
-    errorprone "com.google.errorprone:error_prone_core:2.3.4"
-    errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
-
-    implementation(
-            "org.checkerframework:checker-qual:3.4.0",
-            "com.google.guava:guava:29.0-jre"
-    )
-
     testImplementation "io.spine:spine-testutil-server:${spine.version()}"
 }
 
 tasks.withType(JavaCompile) {
-
-    // Explicitly states the encoding of the source and test source files, ensuring
-    // correct execution of the `javac` task.
+    // Set the encoding of the source and test source files.
     options.encoding = 'UTF-8'
+    // Turn important warnings on.
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-
-    // Configure Error Prone:
-    // 1. Exclude generated sources from being analyzed by Error Prone.
-    // 2. Turn the check off until Error Prone can handle `@Nested` JUnit classes.
-    //    See issue: https://github.com/google/error-prone/issues/956
-    // 3. Turn off checks which report unused methods and unused method parameters.
-    //    See issue: https://github.com/SpineEventEngine/config/issues/61
-    //
-    // For more config details see:
-    //    https://github.com/tbroyer/gradle-errorprone-plugin/tree/master#usage
-
-    options.errorprone.errorproneArgs.addAll(
-            '-XepExcludedPaths:.*/generated/.*',
-            '-Xep:ClassCanBeStatic:OFF',
-            '-Xep:UnusedMethod:OFF',
-            '-Xep:UnusedVariable:OFF',
-            '-Xep:CheckReturnValue:OFF')
 }
 
-// Task for running `HelloWorldApp` from console.
+// The task for running example application from the command line.
 task sayHello(type: JavaExec) {
     main = 'io.spine.helloworld.Example'
     classpath = sourceSets.main.runtimeClasspath

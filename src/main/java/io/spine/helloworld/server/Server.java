@@ -7,17 +7,14 @@ import io.spine.server.storage.memory.InMemoryStorageFactory;
 import io.spine.server.transport.memory.InMemoryTransportFactory;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
 
 import static io.spine.server.Server.inProcess;
-import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 /**
  * Backend implementation of the Hello Context.
  */
 public final class Server {
 
-    private static final ExecutorService deliveryPool = newSingleThreadExecutor();
     private final io.spine.server.Server server;
 
     /**
@@ -52,7 +49,6 @@ public final class Server {
 
     /** Shut downs the server. */
     public void shutdown() {
-        deliveryPool.shutdownNow();
         server.shutdown();
     }
 }
