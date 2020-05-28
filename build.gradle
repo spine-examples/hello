@@ -33,10 +33,6 @@ apply from: "$rootDir/gradle/idea.gradle"
 // Add JUnit to the project.
 apply from: "$rootDir/gradle/tests.gradle"
 
-dependencies {
-    testImplementation "io.spine:spine-testutil-server:${spine.version()}"
-}
-
 tasks.withType(JavaCompile) {
     // Set the encoding of the source and test source files.
     options.encoding = 'UTF-8'
