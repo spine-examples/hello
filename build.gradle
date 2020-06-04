@@ -36,13 +36,6 @@ apply from: "$rootDir/gradle/idea.gradle"
 // Add JUnit to the project.
 apply from: "$rootDir/gradle/tests.gradle"
 
-tasks.withType(JavaCompile) {
-    // Set the encoding of the source and test source files.
-    options.encoding = 'UTF-8'
-    // Turn important warnings on.
-    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-}
-
 // The task for running example application from the command line.
 task sayHello(type: JavaExec) {
     main = 'io.spine.helloworld.Example'
