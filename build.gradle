@@ -36,8 +36,8 @@ apply from: "$rootDir/gradle/idea.gradle"
 // Add JUnit to the project.
 apply from: "$rootDir/gradle/tests.gradle"
 
-//#docregion run-task
 // The task for running example application from the command line.
+//#docregion run-task
 task sayHello(type: JavaExec) {
     main = 'io.spine.helloworld.Example'
     classpath = sourceSets.main.runtimeClasspath
