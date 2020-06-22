@@ -19,7 +19,7 @@
 //
 //#docregion add-plugin
 plugins {
-    id 'io.spine.tools.gradle.bootstrap' version '1.5.8'
+    id 'io.spine.tools.gradle.bootstrap' version '1.5.23'
 }
 //#enddocregion add-plugin
 
