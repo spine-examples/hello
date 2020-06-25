@@ -1,5 +1,6 @@
 package io.spine.helloworld.server;
 
+import io.spine.base.Production;
 import io.spine.helloworld.server.hello.HelloContext;
 import io.spine.server.ServerEnvironment;
 import io.spine.server.delivery.Delivery;
@@ -37,9 +38,9 @@ public final class Server {
      */
     private static void configureServerEnvironment() {
         ServerEnvironment se = ServerEnvironment.instance();
-        se.configureStorage(InMemoryStorageFactory.newInstance());
-        se.configureTransport(InMemoryTransportFactory.newInstance());
-        se.configureDelivery(Delivery.localAsync());
+        se.use(InMemoryStorageFactory.newInstance(), Production.class);
+        se.use(InMemoryTransportFactory.newInstance(), Production.class);
+        se.use(Delivery.localAsync(), Production.class);
     }
 
     /** Starts the server. */
