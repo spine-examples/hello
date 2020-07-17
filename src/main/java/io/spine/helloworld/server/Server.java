@@ -23,7 +23,7 @@ public final class Server {
      * with the passed name.
      */
     public Server(String serverName) {
-        configureServerEnvironment();
+        configureEnvironment();
         this.server = inProcess(serverName)
                 .add(HelloContext.newBuilder())
                 .build();
@@ -36,7 +36,7 @@ public final class Server {
      * example application. Real applications would use implementations that correspond
      * to their environments.
      */
-    private static void configureServerEnvironment() {
+    private static void configureEnvironment() {
         Class<Production> prod = Production.class;
         ServerEnvironment
                 .instance()
