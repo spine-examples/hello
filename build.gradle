@@ -17,15 +17,12 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-//#docregion add-plugin
-plugins {
-    id 'io.spine.tools.gradle.bootstrap' version '1.5.8'
-}
-//#enddocregion add-plugin
 
-//#docregion add-server-dependency
+plugins {
+    id 'io.spine.tools.gradle.bootstrap' version '1.5.24'
+}
+
 spine.enableJava().server()
-//#enddocregion add-server-dependency
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -37,9 +34,18 @@ apply from: "$rootDir/gradle/idea.gradle"
 apply from: "$rootDir/gradle/tests.gradle"
 
 // The task for running example application from the command line.
-//#docregion run-task
 task sayHello(type: JavaExec) {
     main = 'io.spine.helloworld.Example'
     classpath = sourceSets.main.runtimeClasspath
 }
-//#enddocregion run-task
+
+/**
+ * The task for composite builds to build this example.
+ *
+ * <p>This build task is not a part of the example. It is used by the composite build of
+ * the spine.io project which includes this project for embedding the source code of
+ * this example into the site.
+ */
+task buildAll(type: GradleBuild) {
+    tasks = ['build']
+}

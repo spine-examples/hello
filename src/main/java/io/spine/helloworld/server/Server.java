@@ -1,5 +1,6 @@
 package io.spine.helloworld.server;
 
+import io.spine.base.Production;
 import io.spine.helloworld.server.hello.HelloContext;
 import io.spine.server.ServerEnvironment;
 import io.spine.server.delivery.Delivery;
@@ -22,7 +23,7 @@ public final class Server {
      * with the passed name.
      */
     public Server(String serverName) {
-        configureServerEnvironment();
+        configureEnvironment();
         this.server = inProcess(serverName)
                 .add(HelloContext.newBuilder())
                 .build();
@@ -35,11 +36,13 @@ public final class Server {
      * example application. Real applications would use implementations that correspond
      * to their environments.
      */
-    private static void configureServerEnvironment() {
-        ServerEnvironment se = ServerEnvironment.instance();
-        se.configureStorage(InMemoryStorageFactory.newInstance());
-        se.configureTransport(InMemoryTransportFactory.newInstance());
-        se.configureDelivery(Delivery.localAsync());
+    private static void configureEnvironment() {
+        Class<Production> prod = Production.class;
+        ServerEnvironment
+                .instance()
+                .use(InMemoryStorageFactory.newInstance(), prod)
+                .use(Delivery.localAsync(), prod)
+                .use(InMemoryTransportFactory.newInstance(), prod);
     }
 
     /** Starts the server. */

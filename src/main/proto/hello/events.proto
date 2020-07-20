@@ -32,7 +32,7 @@ option java_multiple_files = true;
 message Printed {
 
     // The login name of the user.
-    string username = 1;
+    string username = 1 [(required) = true];
 
     // The printed text.
     string text = 2 [(required) = true];
