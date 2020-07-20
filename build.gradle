@@ -39,12 +39,13 @@ task sayHello(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
-// The task for composite builds to build this example.
-//
-// This build task is not a part of the example. It is used by the composite build of
-// the `spine.io` project which includes this project for embedding the source code of
-// this example into the site.
-//
+/**
+ * The task for composite builds to build this example.
+ *
+ * <p>This build task is not a part of the example. It is used by the composite build of
+ * the spine.io project which includes this project for embedding the source code of
+ * this example into the site.
+ */
 task buildAll(type: GradleBuild) {
     tasks = ['build']
 }
