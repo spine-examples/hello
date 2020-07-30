@@ -29,9 +29,9 @@
  *
  * @see io.spine.helloworld.server.Server Server
  */
-@BoundedContext(HelloContext.NAME)
 @CheckReturnValue
 @ParametersAreNonnullByDefault
+@BoundedContext(HelloContext.NAME)
 package io.spine.helloworld.server.hello;
 
 import com.google.errorprone.annotations.CheckReturnValue;
