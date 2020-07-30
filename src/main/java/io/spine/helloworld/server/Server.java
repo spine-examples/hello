@@ -58,8 +58,7 @@ public final class Server {
      */
     private static void configureEnvironment() {
         Class<Production> prod = Production.class;
-        ServerEnvironment
-                .instance()
+        ServerEnvironment.instance()
                 .use(InMemoryStorageFactory.newInstance(), prod)
                 .use(Delivery.localAsync(), prod)
                 .use(InMemoryTransportFactory.newInstance(), prod);

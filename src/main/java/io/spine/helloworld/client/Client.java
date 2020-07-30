@@ -51,8 +51,7 @@ public final class Client {
      */
     public void sendCommand() {
         String userName = System.getProperty("user.name");
-        Print commandMessage = Print
-                .newBuilder()
+        Print commandMessage = Print.newBuilder()
                 .setUsername(userName)
                 .setText("Hello World!")
                 .vBuild();
