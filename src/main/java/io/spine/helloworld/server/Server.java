@@ -36,6 +36,10 @@ import static io.spine.server.Server.inProcess;
  */
 public final class Server {
 
+    static {
+        configureEnvironment();
+    }
+
     private final io.spine.server.Server server;
 
     /**
@@ -43,7 +47,6 @@ public final class Server {
      * with the passed name.
      */
     public Server(String serverName) {
-        configureEnvironment();
         this.server = inProcess(serverName)
                 .add(HelloContext.newBuilder())
                 .build();
