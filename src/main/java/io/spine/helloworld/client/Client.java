@@ -84,7 +84,8 @@ public final class Client {
         String out = format(
                 "The client received the event: %s%s",
                 e.getClass().getName(),
-                toCompactJson(e));
+                toCompactJson(e)
+        );
         System.out.println(out);
     }
 
