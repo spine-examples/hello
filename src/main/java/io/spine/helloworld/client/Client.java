@@ -74,18 +74,7 @@ public final class Client {
      */
     private void onPrinted(Printed event) {
         printEvent(event);
-        if (subscriptions != null) {
-            subscriptions.forEach(s -> client.subscriptions().cancel(s));
-            this.subscriptions = null;
-        }
-    }
-
-    /**
-     * Verifies if the client finished unsubscribing.
-     */
-    public boolean isDone() {
-        return client.subscriptions()
-                     .isEmpty();
+        cancelSubscriptions();
     }
 
     /**
@@ -98,6 +87,24 @@ public final class Client {
                 toCompactJson(e)
         );
         System.out.println(out);
+    }
+
+    /**
+     * Cancels all current subscriptions, if any.
+     */
+    private void cancelSubscriptions() {
+        if (subscriptions != null) {
+            subscriptions.forEach(s -> client.subscriptions().cancel(s));
+            this.subscriptions = null;
+        }
+    }
+
+    /**
+     * Verifies if the client finished cancelling active subscriptions.
+     */
+    public boolean isDone() {
+        return client.subscriptions()
+                     .isEmpty();
     }
 
     /**
