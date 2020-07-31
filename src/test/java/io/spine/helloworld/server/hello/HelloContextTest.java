@@ -2,7 +2,8 @@ package io.spine.helloworld.server.hello;
 
 import io.spine.helloworld.hello.command.Print;
 import io.spine.helloworld.hello.event.Printed;
-import io.spine.testing.server.blackbox.BlackBoxContext;
+import io.spine.server.BoundedContextBuilder;
+import io.spine.testing.server.blackbox.ContextAwareTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,13 +12,11 @@ import org.junit.jupiter.api.Test;
 import static io.spine.testing.TestValues.randomString;
 
 @DisplayName("Hello Context should")
-class HelloContextTest {
+class HelloContextTest extends ContextAwareTest {
 
-    private BlackBoxContext context;
-
-    @BeforeEach
-    void setUp() {
-        context = BlackBoxContext.from(HelloContext.newBuilder());
+    @Override
+    protected BoundedContextBuilder contextBuilder() {
+        return HelloContext.newBuilder();
     }
 
     @Nested
@@ -33,7 +32,7 @@ class HelloContextTest {
                     .setUsername(randomString())
                     .setText(randomString())
                     .vBuild();
-            context.receivesCommand(command);
+            context().receivesCommand(command);
         }
 
         @Test
@@ -44,7 +43,7 @@ class HelloContextTest {
                     .setUsername(command.getUsername())
                     .addLines(command.getText())
                     .vBuild();
-            context.assertState(command.getUsername(), expected);
+            context().assertState(command.getUsername(), expected);
         }
 
         @Test
@@ -55,7 +54,7 @@ class HelloContextTest {
                     .setUsername(command.getUsername())
                     .setText(command.getText())
                     .build();
-            context.assertEvent(expected);
+            context().assertEvent(expected);
         }
     }
 }
