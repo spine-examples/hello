@@ -47,8 +47,7 @@ class HelloContextTest extends ContextAwareTest {
 
         @BeforeEach
         void sendCommand() {
-            command = Print
-                    .newBuilder()
+            command = Print.newBuilder()
                     .setUsername(randomString())
                     .setText(randomString())
                     .vBuild();
@@ -57,8 +56,7 @@ class HelloContextTest extends ContextAwareTest {
 
         @Test @DisplayName("emitting the `Printed` event")
         void event() {
-            Printed expected = Printed
-                    .newBuilder()
+            Printed expected = Printed.newBuilder()
                     .setUsername(command.getUsername())
                     .setText(command.getText())
                     .build();
@@ -67,8 +65,7 @@ class HelloContextTest extends ContextAwareTest {
 
         @Test @DisplayName("updating the `Console` entity")
         void entity() {
-            Output expected = Output
-                    .newBuilder()
+            Output expected = Output.newBuilder()
                     .setUsername(command.getUsername())
                     .addLines(command.getText())
                     .vBuild();
