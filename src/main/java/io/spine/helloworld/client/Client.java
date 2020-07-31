@@ -40,7 +40,6 @@ public final class Client {
     private final io.spine.client.Client client;
 
     public Client(String serverName) {
-        checkNotNull(serverName);
         this.client = inProcess(serverName)
                 .shutdownTimout(2, TimeUnit.SECONDS)
                 .build();
