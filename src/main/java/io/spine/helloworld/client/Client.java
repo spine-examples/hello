@@ -20,13 +20,15 @@
 
 package io.spine.helloworld.client;
 
+import com.google.common.collect.ImmutableSet;
 import io.spine.base.EventMessage;
+import io.spine.client.Subscription;
 import io.spine.helloworld.hello.command.Print;
 import io.spine.helloworld.hello.event.Printed;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static io.spine.client.Client.inProcess;
 import static io.spine.json.Json.toCompactJson;
 import static java.lang.String.format;
@@ -38,6 +40,9 @@ import static java.lang.String.format;
 public final class Client {
 
     private final io.spine.client.Client client;
+
+    /** The subscriptions to the outcome of the sent command. */
+    private @Nullable ImmutableSet<Subscription> subscriptions;
 
     public Client(String serverName) {
         this.client = inProcess(serverName)
@@ -54,11 +59,11 @@ public final class Client {
                 .setUsername(userName)
                 .setText("Hello World!")
                 .vBuild();
-
-        client.asGuest()
-              .command(commandMessage)
-              .observe(Printed.class, this::onPrinted)
-              .post();
+        this.subscriptions =
+                client.asGuest()
+                      .command(commandMessage)
+                      .observe(Printed.class, this::onPrinted)
+                      .post();
     }
 
     /**
@@ -69,15 +74,23 @@ public final class Client {
      */
     private void onPrinted(Printed event) {
         printEvent(event);
-        client.subscriptions()
-              .cancelAll();
+        if (subscriptions != null) {
+            subscriptions.forEach(s -> client.subscriptions().cancel(s));
+            this.subscriptions = null;
+        }
     }
 
+    /**
+     * Verifies if the client finished unsubscribing.
+     */
     public boolean isDone() {
         return client.subscriptions()
                      .isEmpty();
     }
 
+    /**
+     * Prints the JSON form of the passed event message to the console.
+     */
     private void printEvent(EventMessage e) {
         String out = format(
                 "The client received the event: %s%s",
