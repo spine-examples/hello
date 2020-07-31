@@ -47,34 +47,29 @@ class HelloContextTest extends ContextAwareTest {
 
         @BeforeEach
         void sendCommand() {
-            command = Print
-                    .newBuilder()
+            command = Print.newBuilder()
                     .setUsername(randomString())
                     .setText(randomString())
                     .vBuild();
             context().receivesCommand(command);
         }
 
-        @Test
-        @DisplayName("updating the `Console` entity")
-        void entity() {
-            Output expected = Output
-                    .newBuilder()
-                    .setUsername(command.getUsername())
-                    .addLines(command.getText())
-                    .vBuild();
-            context().assertState(command.getUsername(), expected);
-        }
-
-        @Test
-        @DisplayName("emitting the `Printed` event")
+        @Test @DisplayName("emitting the `Printed` event")
         void event() {
-            Printed expected = Printed
-                    .newBuilder()
+            Printed expected = Printed.newBuilder()
                     .setUsername(command.getUsername())
                     .setText(command.getText())
                     .build();
             context().assertEvent(expected);
+        }
+
+        @Test @DisplayName("updating the `Console` entity")
+        void entity() {
+            Output expected = Output.newBuilder()
+                    .setUsername(command.getUsername())
+                    .addLines(command.getText())
+                    .vBuild();
+            context().assertState(command.getUsername(), expected);
         }
     }
 }
