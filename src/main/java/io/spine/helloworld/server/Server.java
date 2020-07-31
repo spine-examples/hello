@@ -1,3 +1,23 @@
+/*
+ * Copyright 2020, TeamDev. All rights reserved.
+ *
+ * Redistribution and use in source and/or binary forms, with or without
+ * modification, must retain the above copyright notice and the following
+ * disclaimer.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package io.spine.helloworld.server;
 
 import io.spine.base.Production;
@@ -16,6 +36,10 @@ import static io.spine.server.Server.inProcess;
  */
 public final class Server {
 
+    static {
+        configureEnvironment();
+    }
+
     private final io.spine.server.Server server;
 
     /**
@@ -23,7 +47,6 @@ public final class Server {
      * with the passed name.
      */
     public Server(String serverName) {
-        configureEnvironment();
         this.server = inProcess(serverName)
                 .add(HelloContext.newBuilder())
                 .build();
@@ -38,8 +61,7 @@ public final class Server {
      */
     private static void configureEnvironment() {
         Class<Production> prod = Production.class;
-        ServerEnvironment
-                .instance()
+        ServerEnvironment.instance()
                 .use(InMemoryStorageFactory.newInstance(), prod)
                 .use(Delivery.localAsync(), prod)
                 .use(InMemoryTransportFactory.newInstance(), prod);
