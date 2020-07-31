@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.spine.testing.TestValues.randomString;
 
-@DisplayName("Hello Context should")
+@DisplayName("Hello context should")
 class HelloContextTest extends ContextAwareTest {
 
     @Override
