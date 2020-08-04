@@ -96,7 +96,7 @@ public final class Client {
     private void cancelSubscriptions() {
         if (subscriptions != null) {
             subscriptions.forEach(s -> client.subscriptions().cancel(s));
-            this.subscriptions = null;
+            subscriptions = null;
         }
     }
 
