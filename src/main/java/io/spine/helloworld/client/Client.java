@@ -23,7 +23,6 @@ package io.spine.helloworld.client;
 import com.google.common.collect.ImmutableSet;
 import io.spine.base.EventMessage;
 import io.spine.client.Subscription;
-import io.spine.client.Subscriptions;
 import io.spine.helloworld.hello.command.Print;
 import io.spine.helloworld.hello.event.Printed;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -96,7 +95,7 @@ public final class Client {
     private void cancelSubscriptions() {
         if (subscriptions != null) {
             subscriptions.forEach(s -> client.subscriptions().cancel(s));
-            this.subscriptions = null;
+            subscriptions = null;
         }
     }
 
