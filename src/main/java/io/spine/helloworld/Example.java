@@ -70,8 +70,7 @@ public final class Example {
      * @see Server
      * @see Client
      */
-    @SuppressWarnings("UnstableApiUsage") /* Uninterruptibles.sleepUninterruptibly() from Guava
-        is still @Beta. It's safe to use for this example. */
+    @SuppressWarnings("UnstableApiUsage") // `sleepUninterruptibly()` is @Beta. OK for this example.
     public static void main(String[] args) {
         String serverName = UUID.randomUUID().toString();
         Server server = new Server(serverName);
