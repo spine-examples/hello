@@ -25,6 +25,7 @@ import io.spine.helloworld.hello.command.Print;
 import io.spine.helloworld.hello.event.Printed;
 import io.spine.helloworld.server.Server;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.UUID;
 
@@ -69,6 +70,7 @@ public final class Example {
      * @see Server
      * @see Client
      */
+    @SuppressWarnings("UnstableApiUsage")
     public static void main(String[] args) {
         String serverName = UUID.randomUUID().toString();
         Server server = new Server(serverName);
@@ -78,10 +80,9 @@ public final class Example {
             client = new Client(serverName);
             client.sendCommand();
             while (!client.isDone()) {
-                //noinspection UnstableApiUsage
                 sleepUninterruptibly(Duration.ofMillis(100));
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             onError(e);
         }
         finally {
