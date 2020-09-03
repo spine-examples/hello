@@ -19,16 +19,13 @@
  */
 
 plugins {
-    id 'io.spine.tools.gradle.bootstrap' version '1.5.27'
+    id 'io.spine.tools.gradle.bootstrap' version '1.5.29'
 }
 
 spine.enableJava().server()
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
-
-// Configure IDEA to see the generated code.
-apply from: "$rootDir/gradle/idea.gradle"
 
 // Add JUnit to the project.
 apply from: "$rootDir/gradle/tests.gradle"
