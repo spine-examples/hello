@@ -19,7 +19,7 @@
  */
 
 plugins {
-    id 'io.spine.tools.gradle.bootstrap' version '1.5.28'
+    id 'io.spine.tools.gradle.bootstrap' version '1.5.29'
 }
 
 spine.enableJava().server()
