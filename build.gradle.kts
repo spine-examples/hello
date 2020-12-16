@@ -25,21 +25,26 @@
  */
 
 plugins {
+    java
     id("io.spine.tools.gradle.bootstrap").version("1.7.0")
 }
 
 spine.enableJava().server()
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 // Add JUnit to the project.
-apply from: "$rootDir/gradle/tests.gradle"
+apply {
+    from("$rootDir/gradle/tests.gradle")
+}
 
 // The task for running example application from the command line.
-task sayHello(type: JavaExec) {
+tasks.register<JavaExec>("sayHello") {
     main = "io.spine.helloworld.Example"
-    classpath = sourceSets.main.runtimeClasspath
+    classpath = sourceSets["main"].runtimeClasspath
 }
 
 /**
@@ -49,6 +54,6 @@ task sayHello(type: JavaExec) {
  * the spine.io project which includes this project for embedding the source code of
  * this example into the site.
  */
-task buildAll(type: GradleBuild) {
-    tasks = ["build"]
+tasks.register<GradleBuild>("buildAll") {
+    tasks = listOf("build")
 }
