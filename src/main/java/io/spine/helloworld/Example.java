@@ -1,6 +1,12 @@
 /*
  * Copyright 2020, TeamDev. All rights reserved.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
  * disclaimer.
@@ -20,6 +26,7 @@
 
 package io.spine.helloworld;
 
+import io.spine.base.Identifier;
 import io.spine.helloworld.client.Client;
 import io.spine.helloworld.hello.command.Print;
 import io.spine.helloworld.hello.event.Printed;
@@ -27,7 +34,6 @@ import io.spine.helloworld.server.Server;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.UUID;
 
 import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
 
@@ -72,7 +78,7 @@ public final class Example {
      */
     @SuppressWarnings("UnstableApiUsage") // `sleepUninterruptibly()` is @Beta. OK for this example.
     public static void main(String[] args) {
-        String serverName = UUID.randomUUID().toString();
+        String serverName = Identifier.newUuid();
         Server server = new Server(serverName);
         Client client = null;
         try {
@@ -84,8 +90,7 @@ public final class Example {
             }
         } catch (IOException e) {
             onError(e);
-        }
-        finally {
+        } finally {
             if (client != null) {
                 client.close();
             }

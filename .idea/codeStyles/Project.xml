@@ -1,7 +1,6 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
     <option name="RIGHT_MARGIN" value="100" />
-    <option name="FORMATTER_TAGS_ENABLED" value="true" />
     <DartCodeStyleSettings>
       <option name="DELEGATE_TO_DARTFMT" value="false" />
     </DartCodeStyleSettings>
@@ -26,6 +25,27 @@
         <ANNO name="org.junit.jupiter.api.Test" />
       </REPEAT_ANNOTATIONS>
     </JavaCodeStyleSettings>
+    <JetCodeStyleSettings>
+      <option name="PACKAGES_TO_USE_STAR_IMPORTS">
+        <value>
+          <package name="java.util" alias="false" withSubpackages="false" />
+          <package name="kotlinx.android.synthetic" alias="false" withSubpackages="false" />
+          <package name="io.ktor" alias="false" withSubpackages="false" />
+        </value>
+      </option>
+      <option name="PACKAGES_IMPORT_LAYOUT">
+        <value>
+          <package name="" alias="false" withSubpackages="true" />
+          <package name="java" alias="false" withSubpackages="false" />
+          <package name="javax" alias="false" withSubpackages="false" />
+          <package name="kotlin" alias="false" withSubpackages="false" />
+          <package name="" alias="true" withSubpackages="true" />
+        </value>
+      </option>
+      <option name="NAME_COUNT_TO_USE_STAR_IMPORT" value="2147483647" />
+      <option name="NAME_COUNT_TO_USE_STAR_IMPORT_FOR_MEMBERS" value="2147483647" />
+      <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
+    </JetCodeStyleSettings>
     <XML>
       <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
     </XML>
@@ -41,6 +61,7 @@
       <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
       <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="1" />
       <option name="BLANK_LINES_AFTER_CLASS_HEADER" value="1" />
+      <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
       <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
       <option name="ALIGN_MULTILINE_TERNARY_OPERATION" value="true" />
       <option name="ALIGN_MULTILINE_THROWS_LIST" value="true" />
@@ -49,6 +70,7 @@
       <option name="METHOD_PARAMETERS_WRAP" value="1" />
       <option name="RESOURCE_LIST_RPAREN_ON_NEXT_LINE" value="true" />
       <option name="THROWS_LIST_WRAP" value="1" />
+      <option name="METHOD_CALL_CHAIN_WRAP" value="2" />
       <option name="BINARY_OPERATION_WRAP" value="1" />
       <option name="TERNARY_OPERATION_SIGNS_ON_NEXT_LINE" value="true" />
       <option name="KEEP_MULTIPLE_EXPRESSIONS_IN_ONE_LINE" value="true" />
@@ -69,6 +91,9 @@
           </group>
         </groups>
       </arrangement>
+    </codeStyleSettings>
+    <codeStyleSettings language="kotlin">
+      <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
     </codeStyleSettings>
   </code_scheme>
 </component>

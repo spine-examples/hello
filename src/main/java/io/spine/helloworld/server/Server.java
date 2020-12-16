@@ -1,6 +1,12 @@
 /*
  * Copyright 2020, TeamDev. All rights reserved.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
  * disclaimer.
@@ -60,19 +66,22 @@ public final class Server {
      * to their environments.
      */
     private static void configureEnvironment() {
-        Class<Production> prod = Production.class;
-        ServerEnvironment.instance()
-                .use(InMemoryStorageFactory.newInstance(), prod)
-                .use(Delivery.localAsync(), prod)
-                .use(InMemoryTransportFactory.newInstance(), prod);
+        ServerEnvironment.when(Production.class)
+                .use(InMemoryStorageFactory.newInstance())
+                .use(Delivery.localAsync())
+                .use(InMemoryTransportFactory.newInstance());
     }
 
-    /** Starts the server. */
+    /**
+     * Starts the server.
+     */
     public void start() throws IOException {
         server.start();
     }
 
-    /** Shut downs the server. */
+    /**
+     * Shuts downs the server.
+     */
     public void shutdown() {
         server.shutdown();
     }

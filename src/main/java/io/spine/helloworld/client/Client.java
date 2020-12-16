@@ -1,6 +1,12 @@
 /*
  * Copyright 2020, TeamDev. All rights reserved.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
  * disclaimer.
@@ -46,7 +52,7 @@ public final class Client {
 
     public Client(String serverName) {
         this.client = inProcess(serverName)
-                .shutdownTimout(2, TimeUnit.SECONDS)
+                .shutdownTimeout(2, TimeUnit.SECONDS)
                 .build();
     }
 
@@ -55,10 +61,11 @@ public final class Client {
      */
     public void sendCommand() {
         String userName = System.getProperty("user.name");
-        Print commandMessage = Print.newBuilder()
-                .setUsername(userName)
-                .setText("Hello World!")
-                .vBuild();
+        Print commandMessage =
+                Print.newBuilder()
+                     .setUsername(userName)
+                     .setText("Hello World!")
+                     .vBuild();
         this.subscriptions =
                 client.asGuest()
                       .command(commandMessage)
@@ -69,8 +76,9 @@ public final class Client {
     /**
      * Prints the passed event and clears the subscriptions.
      *
-     * @implNote Since we expect only one event produced in response to the {@link Print} command
-     *  we clear the subscriptions as the event arrives.
+     * @implNote Since we expect only one event produced in response to the {@link Print}
+     *         command
+     *         we clear the subscriptions as the event arrives.
      */
     private void onPrinted(Printed event) {
         printEvent(event);
@@ -83,7 +91,8 @@ public final class Client {
     private void printEvent(EventMessage e) {
         String out = format(
                 "The client received the event: %s%s",
-                e.getClass().getName(),
+                e.getClass()
+                 .getName(),
                 toCompactJson(e)
         );
         System.out.println(out);
@@ -103,8 +112,9 @@ public final class Client {
      * Tests if the client finished cancelling active subscriptions.
      */
     public boolean isDone() {
-        return client.subscriptions()
-                     .isEmpty();
+        return client
+                .subscriptions()
+                .isEmpty();
     }
 
     /**

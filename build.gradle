@@ -1,6 +1,12 @@
 /*
  * Copyright 2020, TeamDev. All rights reserved.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Redistribution and use in source and/or binary forms, with or without
  * modification, must retain the above copyright notice and the following
  * disclaimer.
@@ -19,7 +25,7 @@
  */
 
 plugins {
-    id 'io.spine.tools.gradle.bootstrap' version '1.6.0'
+    id("io.spine.tools.gradle.bootstrap").version("1.7.0")
 }
 
 spine.enableJava().server()
@@ -32,7 +38,7 @@ apply from: "$rootDir/gradle/tests.gradle"
 
 // The task for running example application from the command line.
 task sayHello(type: JavaExec) {
-    main = 'io.spine.helloworld.Example'
+    main = "io.spine.helloworld.Example"
     classpath = sourceSets.main.runtimeClasspath
 }
 
@@ -44,5 +50,5 @@ task sayHello(type: JavaExec) {
  * this example into the site.
  */
 task buildAll(type: GradleBuild) {
-    tasks = ['build']
+    tasks = ["build"]
 }
