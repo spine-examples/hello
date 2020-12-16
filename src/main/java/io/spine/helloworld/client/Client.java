@@ -52,7 +52,7 @@ public final class Client {
 
     public Client(String serverName) {
         this.client = inProcess(serverName)
-                .shutdownTimout(2, TimeUnit.SECONDS)
+                .shutdownTimeout(2, TimeUnit.SECONDS)
                 .build();
     }
 

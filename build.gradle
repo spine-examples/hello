@@ -25,7 +25,7 @@
  */
 
 plugins {
-    id 'io.spine.tools.gradle.bootstrap' version '1.6.0'
+    id("io.spine.tools.gradle.bootstrap").version("1.7.0")
 }
 
 spine.enableJava().server()
@@ -38,7 +38,7 @@ apply from: "$rootDir/gradle/tests.gradle"
 
 // The task for running example application from the command line.
 task sayHello(type: JavaExec) {
-    main = 'io.spine.helloworld.Example'
+    main = "io.spine.helloworld.Example"
     classpath = sourceSets.main.runtimeClasspath
 }
 
@@ -50,5 +50,5 @@ task sayHello(type: JavaExec) {
  * this example into the site.
  */
 task buildAll(type: GradleBuild) {
-    tasks = ['build']
+    tasks = ["build"]
 }

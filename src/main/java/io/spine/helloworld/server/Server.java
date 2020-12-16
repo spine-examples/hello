@@ -66,19 +66,22 @@ public final class Server {
      * to their environments.
      */
     private static void configureEnvironment() {
-        Class<Production> prod = Production.class;
-        ServerEnvironment.instance()
-                .use(InMemoryStorageFactory.newInstance(), prod)
-                .use(Delivery.localAsync(), prod)
-                .use(InMemoryTransportFactory.newInstance(), prod);
+        ServerEnvironment.when(Production.class)
+                .use(InMemoryStorageFactory.newInstance())
+                .use(Delivery.localAsync())
+                .use(InMemoryTransportFactory.newInstance());
     }
 
-    /** Starts the server. */
+    /**
+     * Starts the server.
+     */
     public void start() throws IOException {
         server.start();
     }
 
-    /** Shut downs the server. */
+    /**
+     * Shuts downs the server.
+     */
     public void shutdown() {
         server.shutdown();
     }
