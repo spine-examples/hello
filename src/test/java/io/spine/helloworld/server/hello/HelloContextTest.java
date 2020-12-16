@@ -60,8 +60,7 @@ class HelloContextTest extends ContextAwareTest {
             context().receivesCommand(command);
         }
 
-        @Test
-        @DisplayName("emitting the `Printed` event")
+        @Test @DisplayName("emitting the `Printed` event")
         void event() {
             Printed expected = Printed.newBuilder()
                     .setUsername(command.getUsername())
@@ -70,8 +69,7 @@ class HelloContextTest extends ContextAwareTest {
             context().assertEvent(expected);
         }
 
-        @Test
-        @DisplayName("updating the `Console` entity")
+        @Test @DisplayName("updating the `Console` entity")
         void entity() {
             Output expected = Output.newBuilder()
                     .setUsername(command.getUsername())
