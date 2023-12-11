@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,34 +26,34 @@
 
 package io.spine.helloworld.server.hello;
 
-import io.spine.server.BoundedContext;
-import io.spine.server.BoundedContextBuilder;
+import io.spine.core.Subscribe;
+import io.spine.helloworld.hello.event.Printed;
+import io.spine.server.event.AbstractEventSubscriber;
+import io.spine.string.Stringifiers;
+
+import static java.lang.String.format;
 
 /**
- * Provides {@link BoundedContextBuilder} for the Hello Context.
+ * Listens to {@link io.spine.helloworld.hello.event.Printed Printed} events.
  */
-public final class HelloContext {
+final class ListenerOfPrinted extends AbstractEventSubscriber {
 
     /**
-     * The name of the Context.
+     * Subscribes to {@code Printed} domain events.
      *
-     * @apiNote This constant is also used for annotating the package.
-     * See {@code package-info.java}.
+     * <p>This is a no-op implementation. In real life, Spine end-users
+     * may choose to send this event (or whichever they subscribe to)
+     * down their pipeline, including any external systems, such as Kafka.
+     *
+     * @param event an event emitted somewhere outside of this subscriber
      */
-    static final String NAME = "Hello";
-
-    /** Prevents instantiation of this utility class. */
-    private HelloContext() {
-    }
-
-    /**
-     * Creates new instance of the Hello Context builder.
-     */
-    public static BoundedContextBuilder newBuilder() {
-        return BoundedContext
-                .singleTenant(NAME)
-                .add(Console.class)
-                // Plug a standalone event dispatcher into this Bounded Context.
-                .addEventDispatcher(new ListenerOfPrinted());
+    @Subscribe
+    @SuppressWarnings({
+            "UseOfSystemOutOrSystemErr" /* To print out the event in its simplest form. */,
+            "unused" /* This method is invoked by Spine framework. */})
+    void on(Printed event) {
+        String message = format("[Listener of `Printed`] An event is received: %s",
+                               Stringifiers.toString(event));
+        System.out.println(message);
     }
 }
