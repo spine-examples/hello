@@ -1,4 +1,4 @@
-[![Build Status][travis-badge]](https://travis-ci.com/spine-examples/hello) &nbsp;
+[![Build Status][ubuntu-build-badge]][gh-actions]
 [![license][license-badge]](http://www.apache.org/licenses/LICENSE-2.0)
 
 [travis-badge]: https://travis-ci.com/spine-examples/hello.svg?branch=master
@@ -19,3 +19,7 @@ To run the sample from the command line, please execute:
 ```bash
 ./gradlew :sayHello
 ```
+[gh-actions]: https://github.com/spine-examples/hello/actions
+[ubuntu-build-badge]: https://github.com/spine-examples/hello/actions/workflows/build.yml/badge.svg
+
+
