@@ -26,7 +26,7 @@
 
 package io.spine.helloworld.server;
 
-import io.spine.base.Production;
+import io.spine.environment.DefaultMode;
 import io.spine.helloworld.server.hello.HelloContext;
 import io.spine.server.ServerEnvironment;
 import io.spine.server.delivery.Delivery;
@@ -59,14 +59,14 @@ public final class Server {
     }
 
     /**
-     * Configures the production server-side environment.
+     * Configures the server-side environment for non-testing mode.
      *
      * <p>We use in-memory implementations (that are typically used in tests) to simplify this
      * example application. Real applications would use implementations that correspond
      * to their environments.
      */
     private static void configureEnvironment() {
-        ServerEnvironment.when(Production.class)
+        ServerEnvironment.when(DefaultMode.class)
                 .use(InMemoryStorageFactory.newInstance())
                 .use(Delivery.localAsync())
                 .use(InMemoryTransportFactory.newInstance());
